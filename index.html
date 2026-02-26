@@ -102,8 +102,14 @@
         background-image: url('images/hero-desert.webp');
         background-size: cover;
         background-position: center;
-        /* Slightly zoom in for a cinematic crop */
-        transform: scale(1.04);
+        animation: heroDrift 22s ease-in-out infinite alternate;
+        transform-origin: center center;
+      }
+      @keyframes heroDrift {
+        0%   { transform: scale(1.0) translate(0, 0); }
+        33%  { transform: scale(1.08) translate(-1.5%, -0.5%); }
+        66%  { transform: scale(1.05) translate(1%, -1%); }
+        100% { transform: scale(1.1) translate(-0.5%, 0.8%); }
       }
 
       /* Left-to-right gradient: dark on left for text, clear on right for sky */
@@ -357,6 +363,8 @@
         scrollbar-width: none;
         padding: 0 80px 32px;
         cursor: grab;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-x;
       }
       .filmstrip::-webkit-scrollbar { display: none; }
       .filmstrip:active { cursor: grabbing; }
@@ -374,10 +382,10 @@
         width: auto;
         display: block;
         object-fit: cover;
-        transition: transform 0.5s ease;
+        transition: transform 0.6s ease;
         pointer-events: none;
       }
-      .filmstrip-item:hover img { transform: scale(1.02); }
+      .filmstrip-item:hover img { transform: scale(1.05); }
 
       /* Drag-to-scroll JS helper */
       .filmstrip.is-dragging { scroll-snap-type: none; }
@@ -410,10 +418,16 @@
         background-image: url('images/bronco-detail.webp');
         background-size: cover;
         background-position: center;
-        transform: scale(1.03);
-        transition: transform 8s ease;
+        animation: kenBurns 16s ease-in-out infinite alternate;
+        transform-origin: center center;
       }
-      .craft-callout:hover .craft-bg { transform: scale(1.0); }
+      @keyframes kenBurns {
+        0%   { transform: scale(1.0) translate(0, 0); }
+        25%  { transform: scale(1.1) translate(-2%, -1%); }
+        50%  { transform: scale(1.16) translate(1.5%, -2%); }
+        75%  { transform: scale(1.1) translate(-1%, 1.5%); }
+        100% { transform: scale(1.18) translate(2%, -0.5%); }
+      }
 
       .craft-overlay {
         position: absolute;
@@ -513,7 +527,9 @@
         height: 100%;
         object-fit: cover;
         display: block;
+        transition: transform 0.8s ease;
       }
+      .assembly-panel:hover img { transform: scale(1.05); }
 
       .assembly-panel-shop,
       .assembly-panel-ui { height: 520px; }
@@ -877,6 +893,27 @@
         color: rgba(255,255,255,0.2);
         letter-spacing: 0.5px;
       }
+      /* ── Scroll reveal ──────────────────────────────────────────────────*/
+      .reveal {
+        opacity: 0;
+        transform: translateY(32px);
+        transition: opacity 0.75s ease, transform 0.75s ease;
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      /* Staggered children inside reveal containers */
+      .reveal-stagger > * {
+        opacity: 0;
+        transform: translateY(28px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+      }
+      .reveal-stagger.visible > *:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0s; }
+      .reveal-stagger.visible > *:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.12s; }
+      .reveal-stagger.visible > *:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.24s; }
+      .reveal-stagger.visible > *:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 0.36s; }
+
       /* ── Responsive ─────────────────────────────────────────────────────*/
       @media (max-width: 768px) {
 
@@ -1028,6 +1065,19 @@
         });
       });
 
+      // ── Scroll reveal ────────────────────────────────────────────────────
+      document.addEventListener('DOMContentLoaded', () => {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => observer.observe(el));
+      });
+
       // ── Configurator Vue app ─────────────────────────────────────────────
       createApp({
         data() {
@@ -1135,7 +1185,7 @@
     </section>
 
     <!-- ── Philosophy ───────────────────────────────────────────────────── -->
-    <section class="philosophy">
+    <section class="philosophy reveal-stagger">
       <div>
         <span class="philosophy-tag">The Subject</span>
         <h2 class="philosophy-heading">737,000+ builds.<br>No two alike.</h2>
@@ -1149,7 +1199,7 @@
     </section>
 
     <!-- ── Highlights ───────────────────────────────────────────────────── -->
-    <section class="highlights" id="highlights">
+    <section class="highlights reveal-stagger" id="highlights">
       <div class="highlight-card">
         <div class="highlight-icon">
           <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -1184,7 +1234,7 @@
 
     <!-- ── Gallery / Filmstrip ───────────────────────────────────────────── -->
     <section class="filmstrip-section" id="gallery">
-      <div class="filmstrip-header">
+      <div class="filmstrip-header reveal">
         <h2 class="filmstrip-headline">Every configuration.<br>Perfectly rendered.</h2>
         <p class="filmstrip-sub"><span class="hint-desktop">Drag</span><span class="hint-mobile">Swipe</span> to explore →</p>
       </div>
@@ -1219,7 +1269,7 @@
     <section class="craft-callout">
       <div class="craft-bg"></div>
       <div class="craft-overlay"></div>
-      <div class="craft-content">
+      <div class="craft-content reveal">
         <p class="craft-quote">Every surface.<br>Every finish.<br>Rendered in real time.</p>
         <span class="craft-credit">Metabox Studio<br>Virtual Photography</span>
       </div>
@@ -1227,7 +1277,7 @@
 
     <!-- ── Assembly story ───────────────────────────────────────────────── -->
     <section class="assembly-section">
-      <div class="assembly-intro">
+      <div class="assembly-intro reveal">
         <p class="assembly-eyebrow">Modular by design</p>
         <h2 class="assembly-headline">Built the same way.<br>Part by part.</h2>
         <p class="assembly-body">
@@ -1235,7 +1285,7 @@
         </p>
       </div>
 
-      <div class="assembly-grid">
+      <div class="assembly-grid reveal-stagger">
         <div class="assembly-panel assembly-panel-shop">
           <img
             src="images/assembly/assembly-shop.webp"
