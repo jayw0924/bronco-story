@@ -347,6 +347,7 @@
         text-align: right;
         line-height: 1.5;
       }
+      .hint-mobile { display: none; }
 
       .filmstrip {
         display: flex;
@@ -876,6 +877,115 @@
         color: rgba(255,255,255,0.2);
         letter-spacing: 0.5px;
       }
+      /* ── Responsive ─────────────────────────────────────────────────────*/
+      @media (max-width: 768px) {
+
+        /* Nav */
+        .site-nav { padding: 0 20px; }
+        .nav-links { display: none; }
+
+        /* Hero */
+        .hero-content { padding: 0 24px; max-width: none; }
+        .hero-sub { max-width: none; }
+
+        /* Philosophy */
+        .philosophy {
+          grid-template-columns: 1fr;
+          gap: 48px;
+          padding: 64px 24px;
+        }
+        .philosophy::before { display: none; }
+        .philosophy-body { max-width: none; }
+
+        /* Highlights */
+        .highlights {
+          grid-template-columns: 1fr;
+          padding: 48px 0;
+          gap: 0;
+        }
+        .highlight-card {
+          border-right: none;
+          border-bottom: 1px solid rgba(255,255,255,0.06);
+          padding: 36px 24px;
+        }
+        .highlight-card:last-child { border-bottom: none; }
+        .highlight-stat { font-size: 40px; }
+        .highlight-desc { max-width: none; }
+
+        /* Filmstrip */
+        .hint-desktop { display: none; }
+        .hint-mobile  { display: inline; }
+        .filmstrip-section { padding: 64px 0 40px; }
+        .filmstrip-header {
+          padding: 0 24px;
+          margin-bottom: 28px;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 6px;
+        }
+        .filmstrip-sub { text-align: left; }
+        .filmstrip { padding: 0 24px 20px; }
+        .filmstrip-item img { height: 220px; }
+
+        /* Craft callout */
+        .craft-callout { height: 65vh; min-height: 340px; }
+        .craft-content {
+          left: 24px;
+          right: 24px;
+          bottom: 28px;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 16px;
+        }
+        .craft-credit { text-align: left; margin-left: 0; }
+
+        /* Assembly */
+        .assembly-section { padding: 64px 24px; }
+        .assembly-intro { margin-bottom: 36px; }
+        .assembly-grid { grid-template-columns: 1fr; }
+        .assembly-panel-shop,
+        .assembly-panel-ui { height: 260px; }
+
+        /* Configure intro */
+        .configure-intro-strip {
+          padding: 48px 24px 28px;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+        }
+
+        /* Configurator controls */
+        .category-header { padding: 12px 16px 8px; }
+        .card-row { padding: 10px 16px 8px; }
+        .material-row { padding: 0 16px 10px; }
+        .footer-bar {
+          flex-wrap: wrap;
+          padding: 6px 16px 14px;
+          gap: 8px;
+          row-gap: 8px;
+        }
+        .footer-spacer { display: none; }
+        .env-group { order: 3; }
+        .export-group { order: 4; }
+        .env-select { max-width: 130px; }
+
+        /* Footer */
+        .site-footer {
+          padding: 32px 24px;
+          flex-direction: column;
+          gap: 8px;
+          text-align: center;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .hero-headline { letter-spacing: -1px; }
+        .assembly-headline { letter-spacing: -1px; }
+        .configure-intro-strip h2 { letter-spacing: -1.5px; }
+        .nav-cta { display: none; }
+        .btn-export { padding: 0 10px; font-size: 10px; }
+        .btn-nav { padding: 0 14px; }
+      }
     </style>
 
     <!-- Vue 3 -->
@@ -1076,7 +1186,7 @@
     <section class="filmstrip-section" id="gallery">
       <div class="filmstrip-header">
         <h2 class="filmstrip-headline">Every configuration.<br>Perfectly rendered.</h2>
-        <p class="filmstrip-sub">Drag to explore →</p>
+        <p class="filmstrip-sub"><span class="hint-desktop">Drag</span><span class="hint-mobile">Swipe</span> to explore →</p>
       </div>
       <div class="fade-right">
         <div class="filmstrip">
