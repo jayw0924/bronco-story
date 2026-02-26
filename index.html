@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>1965 Ford Bronco — Configure Yours</title>
     <link rel="preload" as="image" href="images/hero-desert.webp" type="image/webp">
+    <!-- Video poster preloaded so there's no blank flash before video starts -->
 
     <style>
       /* ── Reset ──────────────────────────────────────────────────────────── */
@@ -99,17 +100,15 @@
       .hero-bg {
         position: absolute;
         inset: 0;
-        background-image: url('images/hero-desert.webp');
-        background-size: cover;
-        background-position: center;
-        animation: heroDrift 22s ease-in-out infinite alternate;
-        transform-origin: center center;
+        overflow: hidden;
       }
-      @keyframes heroDrift {
-        0%   { transform: scale(1.0) translate(0, 0); }
-        33%  { transform: scale(1.08) translate(-1.5%, -0.5%); }
-        66%  { transform: scale(1.05) translate(1%, -1%); }
-        100% { transform: scale(1.1) translate(-0.5%, 0.8%); }
+      .hero-bg video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
       }
 
       /* Left-to-right gradient: dark on left for text, clear on right for sky */
@@ -1160,7 +1159,12 @@
 
     <!-- ── Hero ─────────────────────────────────────────────────────────── -->
     <section class="hero" id="top">
-      <div class="hero-bg"></div>
+      <div class="hero-bg">
+        <video autoplay muted loop playsinline poster="images/hero-desert.webp">
+          <source src="images/hero-bg.mp4" type="video/mp4">
+          <source src="images/hero-bg.webm" type="video/webm">
+        </video>
+      </div>
       <div class="hero-overlay"></div>
       <div class="hero-content">
         <p class="hero-eyebrow">1965 Ford Bronco</p>
