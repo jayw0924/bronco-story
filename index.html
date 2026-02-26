@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>1965 Ford Bronco — Configure Yours</title>
+    <link rel="preload" as="image" href="images/hero-desert.webp" type="image/webp">
 
     <style>
       /* ── Reset ──────────────────────────────────────────────────────────── */
@@ -98,7 +99,7 @@
       .hero-bg {
         position: absolute;
         inset: 0;
-        background-image: url('images/1771983065_ef88f561-3af0-45c7-bbd7-14e5bce1a293_prompt.png');
+        background-image: url('images/hero-desert.webp');
         background-size: cover;
         background-position: center;
         /* Slightly zoom in for a cinematic crop */
@@ -405,7 +406,7 @@
       .craft-bg {
         position: absolute;
         inset: 0;
-        background-image: url('images/bronco-detail.png');
+        background-image: url('images/bronco-detail.webp');
         background-size: cover;
         background-position: center;
         transform: scale(1.03);
@@ -1081,20 +1082,23 @@
         <div class="filmstrip">
           <div class="filmstrip-item">
             <img
-              src="images/1771983065_ef88f561-3af0-45c7-bbd7-14e5bce1a293_prompt.png"
+              src="images/hero-desert.webp"
               alt="Bronco in desert at sunset"
+              loading="lazy" decoding="async"
             />
           </div>
           <div class="filmstrip-item">
             <img
-              src="images/1771982571_ba982cc7-d070-40ba-ba07-60d4907acbdb_prompt.png"
+              src="images/gallery-forest.webp"
               alt="Bronco in Pacific Northwest forest"
+              loading="lazy" decoding="async"
             />
           </div>
           <div class="filmstrip-item">
             <img
-              src="images/1771983204_ef88f561-3af0-45c7-bbd7-14e5bce1a293_prompt.png"
+              src="images/gallery-snow.webp"
               alt="Bronco in winter mountain setting"
+              loading="lazy" decoding="async"
             />
           </div>
         </div>
@@ -1124,8 +1128,9 @@
       <div class="assembly-grid">
         <div class="assembly-panel assembly-panel-shop">
           <img
-            src="images/assembly/bronco-environment-assembly"
+            src="images/assembly/assembly-shop.webp"
             alt="Ford Bronco being assembled in a shop"
+            loading="lazy" decoding="async"
           />
           <div class="assembly-caption">
             <span class="assembly-caption-label">Real world</span>
